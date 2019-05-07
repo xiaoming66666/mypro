@@ -13,31 +13,20 @@
 
     <!-- 焦点图 -->
     <swiper class="banner" indicator-dots indicator-color="rgba(255,255,255,0.6)" indicator-active-color="#fff" autoplay>
-      <swiper-item>
-        <image src="/static/uploads/banner1.png"></image>
+      <swiper-item :key="ke" v-for="(list,ke) in bannerList">
+        <navigator :url="list.navigator_url">
+          <image :src="list.image_src"></image>
+        </navigator>
       </swiper-item>
-      <swiper-item>
-        <image src="/static/uploads/banner2.png"></image>
-      </swiper-item>
-      <swiper-item>
-        <image src="/static/uploads/banner3.png"></image>
-      </swiper-item>
+
     </swiper>
 
     <!-- 导航 -->
     <div class="navs">
-     <navigator>
-       <image src="/static/uploads/icon_index_nav_1@2x.png"></image>
+     <navigator :key="k" :url="list.navigator_url" v-for="(list,k) in navList">
+       <image :src="list.image_src"></image>
      </navigator>
-      <navigator>
-       <image src="/static/uploads/icon_index_nav_2@2x.png"></image>
-     </navigator>
-      <navigator>
-       <image src="/static/uploads/icon_index_nav_3@2x.png"></image>
-     </navigator>
-      <navigator>
-       <image src="/static/uploads/icon_index_nav_4@2x.png"></image>
-     </navigator>
+
     </div>
 
     <!-- 楼层-->
@@ -79,14 +68,55 @@
 
 export default {
 
+  data () {
+    return {
+      bannerList: [],
+      navList: []
+    }
+  },
+  methods: {
+    // 焦点图接口
+    getBanner () {
+      let _this = this;
+    // wx.request 变为mpvue.resquest
+     mpvue.request({
+       url:'https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata',
+       methods: 'get',
+        // data: {},
+        success: function(info){
+         console.log(info);
+          // 更新数据
+         _this.bannerList = info.data.message;
+       }
+      });
+    },
+    // 导航接口
+    getNavs () {
+      let _this = this;
+      mpvue.request({
+        url:'https://www.zhengzhicheng.cn/api/public/v1/home/catitems',
+        methods: 'get',
+        success: function (info) {
+          console.log(info);
+          _this.navList = info.data.message;
+        }
+      });
+    }
+  },
+
+  mounted () {
+    console.log('请求数据...');
+    // 获取焦点图
+    this.getBanner();
+
+    // 获取导航数据
+    this.getNavs();
+  }
 }
 </script>
 
 <style scoped lang="less">
-.search {
 
-
-}
 .search .input-box {
   padding: 21rpx 30rpx;
   background-color: #ea4451;
@@ -106,6 +136,10 @@ export default {
 .banner {
   width: 750rpx;
   height: 340rpx;
+  navigator {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 /*  */
