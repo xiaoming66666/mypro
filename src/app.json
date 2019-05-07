@@ -5,7 +5,7 @@
   "pages/fenl/main" ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#ea4451",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
   },

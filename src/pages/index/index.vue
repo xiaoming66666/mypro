@@ -1,125 +1,151 @@
 <template>
-  <div @click="clickHandle">
+  <div>
+    <!-- 搜索 -->
+    <div class="search">
+      <!-- 搜索框 -->
+      <div class="input-box">
+        <input type="text" placeholder="搜索">
+      </div>
+      <!-- 搜索结果 -->
+      <div class="result"></div>
 
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <img class="userinfo-avatar" src="/static/images/user.png" background-size="cover" />
+    </div>
 
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
+    <!-- 焦点图 -->
+    <swiper class="banner" indicator-dots indicator-color="rgba(255,255,255,0.6)" indicator-active-color="#fff" autoplay>
+      <swiper-item>
+        <image src="/static/uploads/banner1.png"></image>
+      </swiper-item>
+      <swiper-item>
+        <image src="/static/uploads/banner2.png"></image>
+      </swiper-item>
+      <swiper-item>
+        <image src="/static/uploads/banner3.png"></image>
+      </swiper-item>
+    </swiper>
+
+    <!-- 导航 -->
+    <div class="navs">
+     <navigator>
+       <image src="/static/uploads/icon_index_nav_1@2x.png"></image>
+     </navigator>
+      <navigator>
+       <image src="/static/uploads/icon_index_nav_2@2x.png"></image>
+     </navigator>
+      <navigator>
+       <image src="/static/uploads/icon_index_nav_3@2x.png"></image>
+     </navigator>
+      <navigator>
+       <image src="/static/uploads/icon_index_nav_4@2x.png"></image>
+     </navigator>
+    </div>
+
+    <!-- 楼层-->
+    <div class="floors">
+      <div class="floor">
+        <!-- 标题 -->
+        <div class="title">
+          <image src="/static/uploads/pic_floor01_title.png"></image>
+        </div>
+        <div class="pics">
+          <image src="/static/uploads/pic_floor01_1@2x.png"></image>
+          <image src="/static/uploads/pic_floor01_2@2x.png"></image>
+          <image src="/static/uploads/pic_floor01_3@2x.png"></image>
+          <image src="/static/uploads/pic_floor01_4@2x.png"></image>
+          <image src="/static/uploads/pic_floor01_5@2x.png"></image>
+        </div>
       </div>
     </div>
 
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
+    <div class="floors">
+      <div class="floor">
+        <!-- 标题 -->
+        <div class="title">
+          <image src="/static/uploads/pic_floor01_title.png"></image>
+        </div>
+        <div class="pics">
+          <image src="/static/uploads/pic_floor01_1@2x.png"></image>
+          <image src="/static/uploads/pic_floor01_2@2x.png"></image>
+          <image src="/static/uploads/pic_floor01_3@2x.png"></image>
+          <image src="/static/uploads/pic_floor01_4@2x.png"></image>
+          <image src="/static/uploads/pic_floor01_5@2x.png"></image>
+        </div>
       </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" :value="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-
-
-    <div class="all">
-        <div class="left">
-        </div>
-        <div class="right">
-        </div>
     </div>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
 
 export default {
-  data () {
-    return {
-      motto: 'Hello miniprograme',
-      userInfo: {
-        nickName: 'mpvue',
-        avatarUrl: 'http://mpvue.com/assets/logo.png'
-      }
-    }
-  },
 
-  components: {
-    card
-  },
-
-  methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      if (mpvuePlatform === 'wx') {
-        mpvue.switchTab({ url })
-      } else {
-        mpvue.navigateTo({ url })
-      }
-    },
-    clickHandle (ev) {
-      console.log('clickHandle:', ev)
-      // throw {message: 'custom test'}
-    }
-  },
-
-  created () {
-    // let app = getApp()
-  }
 }
 </script>
 
-<style scoped>
-.userinfo {
+<style scoped lang="less">
+.search {
+
+
+}
+.search .input-box {
+  padding: 21rpx 30rpx;
+  background-color: #ea4451;
+}
+
+.search .input-box input {
+  height: 60rpx;
+  background-color: #fff;
+  border-radius: 25rpx;
+  font-size: 24rpx;
+  padding: 0 15rpx;
+  text-align: center;
+  color: #666;
+
+}
+/* 焦点图 */
+.banner {
+  width: 750rpx;
+  height: 340rpx;
+}
+
+/*  */
+.navs {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* 俩端对齐 */
+  justify-content:space-between;
+  padding: 30rpx 42rpx;
 }
-
-.userinfo-avatar {
+.navs navigator {
   width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+  height: 140rpx;
+}
+/*  */
+.floor .title {
+  width:750rpx ;
+  height:60rpx;
+  padding-top: 24 rpx;
+  padding-left: 10rpx;
+  background-color: #f4f4f4;
 }
 
-.userinfo-nickname {
-  color: #aaa;
+.floor .pics image {
+  width:232rpx;
+  height: 188rpx;
+  margin-right: 10rpx;
+  float: left;
+  margin-bottom: 10rpx;
+}
+.floor .pics {
+  padding: 20rpx;
+  overflow: hidden;
 }
 
-.usermotto {
-  margin-top: 150px;
+.floor .pics image:nth-child(2n+1) {
+  margin-right: 0;
+}
+.floor .pics image:first-child {
+  height: 380rpx;
+  margin-right: 10rpx;
 }
 
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-.all{
-  width:7.5rem;
-  height:1rem;
-  background-color:blue;
-}
-.all:after{
-  display:block;
-  content:'';
-  clear:both;
-}
-.left{
-  float:left;
-  width:3rem;
-  height:1rem;
-  background-color:red;
-}
-
-.right{
-  float:left;
-  width:4.5rem;
-  height:1rem;
-  background-color:green;
-}
 </style>

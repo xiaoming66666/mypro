@@ -246,7 +246,7 @@
 </style>
 
 <script>
-
+  // 引入 搜索组件
   import search from '@/components/search';
 
   export default {
