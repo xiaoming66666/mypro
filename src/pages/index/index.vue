@@ -65,6 +65,8 @@
 </template>
 
 <script>
+// 引入 request 请求的封装
+import request from '@/utils/request';
 
 export default {
 
@@ -76,40 +78,56 @@ export default {
   },
   methods: {
     // 焦点图接口
-    getBanner () {
-      let _this = this;
-    // wx.request 变为mpvue.resquest
-     mpvue.request({
-       url:'https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata',
-       methods: 'get',
-        // data: {},
-        success: function(info){
-         console.log(info);
-          // 更新数据
-         _this.bannerList = info.data.message;
-       }
-      });
+    async getBanner () {
+     // ********* 普通写法***************
+    //   let _this = this;
+    // // wx.request 变为mpvue.resquest
+    //  mpvue.request({
+    //    url:'https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata',
+    //    methods: 'get',
+    //     // data: {},
+    //     success: function(info){
+    //      console.log(info);
+    //       // 更新数据
+    //      _this.bannerList = info.data.message;
+    //    }
+    //   });
+    // ********* promise***************
+        let { message } = await request('https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata');
+
+        this.bannerList = message;
     },
     // 导航接口
-    getNavs () {
-      let _this = this;
-      mpvue.request({
-        url:'https://www.zhengzhicheng.cn/api/public/v1/home/catitems',
-        methods: 'get',
-        success: function (info) {
-          console.log(info);
-          _this.navList = info.data.message;
-        }
-      });
+    async getNavs () {
+      // let _this = this;
+      // mpvue.request({
+      //   url:'https://www.zhengzhicheng.cn/api/public/v1/home/catitems',
+      //   methods: 'get',
+      //   success: function (info) {
+      //     console.log(info);
+      //     _this.navList = info.data.message;
+      //   }
+      // });
+
+      let { message } = await request('https://www.zhengzhicheng.cn/api/public/v1/home/catitems');
+
+      this.navList = message;
     }
   },
 
-  mounted () {
+  async mounted () {
     console.log('请求数据...');
+
+// request ('https://www.zhengzhicheng.cn/api/public/v1/home/catitems').then(function(info){
+//   console.log(info)
+// })
+
+  //  let info = await request ('https://www.zhengzhicheng.cn/api/public/v1/home/catitems')
+  // console.log(info)
     // 获取焦点图
     this.getBanner();
 
-    // 获取导航数据
+    // // 获取导航数据
     this.getNavs();
   }
 }
